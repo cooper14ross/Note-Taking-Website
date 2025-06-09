@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+        }
+
+        h1 {
+            font-weight: bold;
+        }
+
+        .new-btn {
+            background-color: #808080;
+            color: #000000;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .note-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .delete-form {
+            margin: 0;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: red;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Notes</h1>
+    <form action="/new" method="GET">
+        <button class="new-btn" type="submit">New</button>
+    </form>
+
+    {% if notes %}
+    {% for id, note in notes.items()|reverse %}
+    <div class="note-entry" onclick="location.href='/note/{{ id }}'">
+        <span>{{ note.title or 'Untitled Note' }}</span>
+        <form class="delete-form" action="/delete/{{ id }}" method="POST" onclick="event.stopPropagation();">
+            <button class="delete-btn" type="submit">Delete</button>
+        </form>
+    </div>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>
